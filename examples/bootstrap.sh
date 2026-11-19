@@ -27,6 +27,20 @@ if ! grep -q "^${EXPECTED}  ${ARCHIVE}$" release_checksum; then
 fi
 echo "${EXPECTED}  ${ARCHIVE}" | sha256sum -c -
 
-tar -xzf "$ARCHIVE"
+# the unpacked binary needs roughly 200 MB free; fail clearly, not with a
+# half-written binary
+NEED_MB=220
+FREE_MB=$(df -Pm . | awk 'NR==2 {print $4}')
+if [ "${FREE_MB:-0}" -lt "$NEED_MB" ]; then
+  echo "FAIL: about ${NEED_MB} MB free is needed to unpack, ${FREE_MB} MB available in $(pwd)"
+  echo "      the archive itself verified, so nothing is wrong with the download"
+  exit 1
+fi
+
+tar -xzf "$ARCHIVE" || {
+  echo "FAIL: could not unpack ${ARCHIVE} (partial binary removed)"
+  rm -f ./pocketd
+  exit 1
+}
 echo "ready: $(./pocketd version)"
 echo "now run: bash examples/verify.sh"

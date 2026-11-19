@@ -1,0 +1,11 @@
+$ ./pocketd tx sign tx.json --from tutorial-demo --keyring-backend test --home ./home \
+    --chain-id pocket --offline --account-number 0 --sequence 0   (summary)
+signatures: 1 | base64 sig length: 88
+signer_infos: [{"public_key": {"@type": "/cosmos.crypto.secp256k1.PubKey", "key": "A6wVQWesU+vc5gk//eNKW8p9BhV5hyUAHWO0du70Lzgp"}, "mode_info": {"single": {"mode": "SIGN_MODE_DIRECT"}}, "sequence": "0"}]
+fee: {"amount": [{"denom": "upokt", "amount": "30000"}], "gas_limit": "200000", "payer": "", "granter": ""}
+
+# The signing account does not exist on-chain yet:
+$ ./pocketd query auth account pokt1lyamkkp54fa845slwffn0yke43xlfvhtqsp5qe --node https://sauron-rpc.infra.pocket.network --chain-id pocket
+rpc error: code = NotFound desc = 
+github.com/cosmos/cosmos-sdk/baseapp.gRPCErrorToSDKError
+	/home/runner/go/pkg/mod/github.com/cosmos/cosmos-sdk@v0.53.8/baseapp/abci.go:1176

@@ -1,0 +1,44 @@
+$ ./pocketd tx service add-service 'tutorial-price-lookup-v1' 'Tutorial Price Lookup' 10 \
+    --card-file card.json --from tutorial-demo --keyring-backend test --home ./home \
+    --chain-id pocket --node https://sauron-rpc.infra.pocket.network --gas 200000 --fees 30000upokt --generate-only
+{
+  "body": {
+    "messages": [
+      {
+        "@type": "/pocket.service.MsgAddService",
+        "owner_address": "pokt1lyamkkp54fa845slwffn0yke43xlfvhtqsp5qe",
+        "service": {
+          "id": "tutorial-price-lookup-v1",
+          "name": "Tutorial Price Lookup",
+          "compute_units_per_relay": "10",
+          "owner_address": "pokt1lyamkkp54fa845slwffn0yke43xlfvhtqsp5qe",
+          "metadata": {
+            "card": "ewogICJzY2hlbWEiOiAicG9ja2V0LXNlcnZpY2UtY2Fy... (1440 base64 chars total)"
+          }
+        }
+      }
+    ],
+    "memo": "",
+    "timeout_height": "0",
+    "unordered": false,
+    "timeout_timestamp": null,
+    "extension_options": [],
+    "non_critical_extension_options": []
+  },
+  "auth_info": {
+    "signer_infos": [],
+    "fee": {
+      "amount": [
+        {
+          "denom": "upokt",
+          "amount": "30000"
+        }
+      ],
+      "gas_limit": "200000",
+      "payer": "",
+      "granter": ""
+    },
+    "tip": null
+  },
+  "signatures": []
+}

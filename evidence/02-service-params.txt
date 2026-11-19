@@ -1,0 +1,18 @@
+$ ./pocketd query service params --node https://sauron-rpc.infra.pocket.network --chain-id pocket
+params:
+  add_service_fee:
+    amount: "1000000000"
+    denom: upokt
+  target_num_relays: "100000"
+
+# cross-check: the same parameter over the public REST route
+$ curl -s https://sauron-api.infra.pocket.network/pokt-network/poktroll/service/params
+{"params":{"add_service_fee":{"denom":"upokt","amount":"1000000000"},"target_num_relays":"100000"}}
+
+# the convenience moniker sets chain-id, node and grpc at once:
+$ ./pocketd query service params --network main
+params:
+  add_service_fee:
+    amount: "1000000000"
+    denom: upokt
+  target_num_relays: "100000"

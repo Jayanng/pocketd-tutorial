@@ -1,0 +1,10 @@
+$ ./pocketd status --node https://sauron-rpc.infra.pocket.network   (summary)
+network: pocket | comet: 0.38.26 | moniker: pnf-seed-one
+latest_block_height: 1015232 | catching_up: False
+earliest_block_height: 1
+
+$ ./pocketd query service relay-mining-difficulty agentsearch-web-extract-v1 --node https://sauron-rpc.infra.pocket.network --chain-id pocket
+relayMiningDifficulty: {}
+
+# Most services carry no explicit relay mining difficulty yet (an empty
+# object means the default applies). This capture shows the honest shape.

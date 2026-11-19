@@ -1,0 +1,9 @@
+$ echo 'e0c5d10bbfcc8cff23736a1b02b7e4066e4681f2b1d1a9596345fd8cedaa21be  pocket_linux_amd64.tar.gz' | sha256sum -c -
+pocket_linux_amd64.tar.gz: OK
+
+$ ./pocketd version
+0.1.37
+
+$ sha256sum release_checksum pocket_linux_amd64.tar.gz
+e05f7f4698bf1ce19a7d47f9cff664e7331273bbca2ffc22df1ed56f2dda1e17  release_checksum
+e0c5d10bbfcc8cff23736a1b02b7e4066e4681f2b1d1a9596345fd8cedaa21be  pocket_linux_amd64.tar.gz

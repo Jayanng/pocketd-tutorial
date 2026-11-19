@@ -1,0 +1,2 @@
+$ ./pocketd tx service validate-card card.json
+✅ valid service card: pocket-service-card/v1, 1080 bytes (onchain max 262144)

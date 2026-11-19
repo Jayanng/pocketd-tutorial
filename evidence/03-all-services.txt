@@ -1,0 +1,20 @@
+$ ./pocketd query service all-services --node https://sauron-rpc.infra.pocket.network --chain-id pocket   (first entries)
+pagination:
+  next_key: aG9wci8=
+  total: "279"
+service:
+- compute_units_per_relay: "100000"
+  id: address-standardization
+  name: Address Standardization
+  owner_address: pokt15je33utektp7e7t6rm7mxfgf6ysssw8fjna5px
+- compute_units_per_relay: "100000"
+  id: agent-trust
+  name: Agent Trust
+  owner_address: pokt16cqt2tjzec6gsxdncl0v6k2aa7awya0wghevlw
+- compute_units_per_relay: "50000"
+  id: agentsearch-web-extract-v1
+  name: AgentSearch Web Extract
+  owner_address: pokt10pqk9609p44n5hudwkmzwkt6hnuphlp9p5nhwh
+- compute_units_per_relay: "50000"
+  id: agentsearch-web-render-v1
+  [... pagination continues ...]

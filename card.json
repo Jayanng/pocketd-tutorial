@@ -1,0 +1,38 @@
+{
+  "schema": "pocket-service-card/v1",
+  "description": "Tutorial demo service card for a price lookup API.",
+  "rpc_types": [
+    {
+      "type": "REST",
+      "intent": "expected",
+      "backend_hint": "price-lookup HTTP server; mount at /",
+      "notes": "GET /v1/price, GET /v1/health. Every response is a JSON object."
+    }
+  ],
+  "apis": ["price-lookup-api"],
+  "specs": [
+    {
+      "kind": "openapi",
+      "api": "price-lookup-api",
+      "url": "https://example.com/openapi.json"
+    }
+  ],
+  "access": "public",
+  "results": "deterministic",
+  "serving": {
+    "backend": "Tutorial demo price lookup service.",
+    "implementations": ["price-lookup >= 0.1.0"],
+    "min_disk_gb": 1,
+    "min_ram_gb": 1,
+    "healthcheck": [
+      {
+        "rpc_type": "REST",
+        "request": { "path": "/v1/health", "method": "GET" },
+        "expect": { "json_path": "$.status", "matches": "^ok$" },
+        "notes": "Readiness probe."
+      }
+    ],
+    "notes": "Gateway operators: configure as type passthrough with rpc_types [\"rest\"]."
+  },
+  "updated": "2026-11-19"
+}

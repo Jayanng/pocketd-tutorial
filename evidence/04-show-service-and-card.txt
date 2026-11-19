@@ -1,0 +1,20 @@
+$ ./pocketd query service show-service agentsearch-web-extract-v1 --node https://sauron-rpc.infra.pocket.network --chain-id pocket   (card base64 abridged)
+service:
+  compute_units_per_relay: "50000"
+  id: agentsearch-web-extract-v1
+  metadata:
+    card: <base64 of the service card, decoded below>
+  name: AgentSearch Web Extract
+  owner_address: pokt10pqk9609p44n5hudwkmzwkt6hnuphlp9p5nhwh
+
+$ ./pocketd query service card agentsearch-web-extract-v1 --node https://sauron-rpc.infra.pocket.network --chain-id pocket   (decoded, head)
+{
+  "schema": "pocket-service-card/v1",
+  "description": "Agent-focused URL extraction: POST /v1/extract returns clean markdown/text, title, links, and metadata for LLM/RAG pipelines. Every response, success or error, is a JSON object.",
+  "rpc_types": [
+    {
+      "type": "REST",
+      "intent": "expected",
+      "backend_hint": "agentsearch-web-extract-v1 HTTP server; mount at /",
+      "notes": "POST /v1/extract, GET /v1/version, GET /v1/health, GET /v1/capabilities. Every response is a JSON object."
+    }

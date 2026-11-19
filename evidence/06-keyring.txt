@@ -1,0 +1,19 @@
+$ ./pocketd keys add tutorial-demo --keyring-backend test --home ./home
+
+- address: pokt1lyamkkp54fa845slwffn0yke43xlfvhtqsp5qe
+  name: tutorial-demo
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A6wVQWesU+vc5gk//eNKW8p9BhV5hyUAHWO0du70Lzgp"}'
+  type: local
+
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+[REDACTED: the tool prints a 24-word recovery mnemonic here. Never share it.]
+
+$ ./pocketd keys list --keyring-backend test --home ./home
+- address: pokt1lyamkkp54fa845slwffn0yke43xlfvhtqsp5qe
+  name: tutorial-demo
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A6wVQWesU+vc5gk//eNKW8p9BhV5hyUAHWO0du70Lzgp"}'
+  type: local
+

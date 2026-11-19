@@ -1,0 +1,17 @@
+== pocketd tutorial verification ==
+node: https://sauron-rpc.infra.pocket.network | chain-id: pocket
+
+PASS  pocketd runs
+PASS  published checksum matches
+SKIP  downloaded archive matches checksum (pocket_linux_amd64.tar.gz not present here)
+PASS  service params reachable
+PASS  add_service_fee is 1000000000 upokt
+PASS  REST cross-check agrees
+PASS  service registry lists services
+PASS  show-service returns a known service
+PASS  service card decodes to pocket-service-card/v1
+PASS  example card validates
+PASS  node is on mainnet and synced
+PASS  node is not catching up
+
+== summary: 11 passed, 0 failed ==

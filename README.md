@@ -17,7 +17,8 @@ simulated.
 
 The Agentic Portal that serves applications is backed by Pocket Network's
 own chain. Services, fees and ownership all live in chain state, and
-`pocketd` is the tool that reads and writes it:
+`pocketd` is the CLI for both sides of it: `query` reads state, `tx`
+builds and sends transactions that change it.
 
 ```
 pocketd (your machine)
@@ -48,7 +49,10 @@ Three facts shape everything below:
 
 ## Prerequisites
 
-- Linux or macOS on x86-64 or arm64 (the release ships both).
+- Linux or macOS on x86-64 or arm64. The release ships all four
+  archives, and this tutorial uses `pocket_linux_amd64.tar.gz`. For
+  another platform, swap the archive name and its checksum line to the
+  matching entry in `release_checksum`.
 - `curl`, `tar`, and `sha256sum` (or `shasum -a 256` on macOS).
 - No wallet, no tokens, no account. This walkthrough creates its own demo
   key and stops before broadcasting.
@@ -398,15 +402,19 @@ stops:
 
 Broadcasting executes the transaction for real: the gas fee and the
 1,000 POKT `add_service_fee` are deducted and the service is registered
-under your address. Before you ever run it for real, this checklist is
-worth the thirty seconds:
+under your address. Both `broadcast` and `simulate` need a funded
+on-chain account, so neither can be exercised with the unfunded demo key
+this tutorial creates. Before you ever broadcast for real, this checklist
+is worth the thirty seconds:
 
 1. `query service params` again and confirm the `add_service_fee` is what
    you expect. It is governance-controlled and can change.
 2. Confirm the owner account holds more than the fee plus gas.
 3. Re-read `tx.json` and confirm the service ID, name and card are yours.
 4. Rebuild the signature with the real account number and sequence.
-5. Use `--dry-run` if you want the node to simulate without executing.
+5. To test before spending, run `tx simulate` on the unsigned `tx.json`
+   with your funded key. The node reports the gas the call consumes or
+   the error it would fail with.
 
 Security rules, in order of importance:
 
@@ -425,17 +433,27 @@ Security rules, in order of importance:
 
 [`examples/verify.sh`](examples/verify.sh) re-checks every read-only claim
 this tutorial makes: checksum, version, live params, the service registry,
-a service card decode, card validation and node status. It never creates
-keys and never sends anything.
+a service card decode, card validation, node status, and the offline
+claims themselves (build and sign with an unreachable node). It creates
+only a throwaway key in a temporary directory, and it never sends
+anything to the network.
+
+If you have not installed `pocketd` yet, [`examples/bootstrap.sh`](examples/bootstrap.sh)
+does Part 1 for you: it downloads the release, checks the published
+checksum, and unpacks the binary into the repository root.
 
 ```bash
-bash examples/verify.sh
+bash examples/bootstrap.sh   # downloads and verifies pocketd
+bash examples/verify.sh      # checks the tutorial's claims
 ```
 
+Without the binary, `verify.sh` still runs the checks that need no local
+CLI and reports the rest as `SKIP`.
+
 Expected result: a line per check ending in `PASS`, and a summary with
-zero failures. The archive check reports `SKIP` when
-`pocket_linux_amd64.tar.gz` is not in the repository root, since it
-verifies bytes this repository does not ship.
+zero failures (13 checks after the bootstrap). The archive check reports
+`SKIP` when `pocket_linux_amd64.tar.gz` is not in the repository root,
+since it verifies bytes this repository does not ship.
 
 ## Test evidence
 

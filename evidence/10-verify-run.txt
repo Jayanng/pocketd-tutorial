@@ -13,5 +13,7 @@ PASS  service card decodes to pocket-service-card/v1
 PASS  example card validates
 PASS  node is on mainnet and synced
 PASS  node is not catching up
+PASS  generate-only works with an unreachable node
+PASS  sign --offline works with an unreachable node
 
-== summary: 11 passed, 0 failed ==
+== summary: 13 passed, 0 failed ==

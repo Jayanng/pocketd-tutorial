@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Re-checks every read-only claim in the tutorial. Creates no keys,
-# sends nothing, spends nothing.
+# Re-checks every claim in the tutorial that can be checked without money.
+# It queries mainnet, creates one throwaway key in a temp dir to test the
+# offline build and sign, and broadcasts nothing.
 set -u
 
 NODE="https://sauron-rpc.infra.pocket.network"
@@ -45,13 +46,33 @@ fi
 check "published checksum matches" bash -c \
   "curl -sL --max-time 60 https://github.com/pokt-network/poktroll/releases/download/v0.1.37/release_checksum | grep -q '^e0c5d10bbfcc8cff23736a1b02b7e4066e4681f2b1d1a9596345fd8cedaa21be  pocket_linux_amd64.tar.gz$'"
 
-# if the downloaded archive is present, it must hash correctly
-if [ -f pocket_linux_amd64.tar.gz ]; then
-  check "downloaded archive matches checksum" bash -c \
-    "echo 'e0c5d10bbfcc8cff23736a1b02b7e4066e4681f2b1d1a9596345fd8cedaa21be  pocket_linux_amd64.tar.gz' | sha256sum -c -"
+# any downloaded release archive must hash correctly. The expected hash
+# comes from the published checksum file, so this works on every platform.
+if command -v sha256sum >/dev/null 2>&1; then
+  SHA="sha256sum"
 else
-  echo "SKIP  downloaded archive matches checksum (pocket_linux_amd64.tar.gz not present here)"
+  SHA="shasum -a 256"
 fi
+CHECKSUM_FILE=$(mktemp)
+curl -sL --max-time 60 -o "$CHECKSUM_FILE" \
+  https://github.com/pokt-network/poktroll/releases/download/v0.1.37/release_checksum
+SAW_ARCHIVE=0
+for ARCHIVE in pocket_*.tar.gz; do
+  [ -f "$ARCHIVE" ] || continue
+  SAW_ARCHIVE=1
+  WANT=$(grep "  ${ARCHIVE}$" "$CHECKSUM_FILE" | awk '{print $1}')
+  if [ -z "$WANT" ]; then
+    echo "FAIL  ${ARCHIVE} is not listed in the published release_checksum"
+    FAIL=$((FAIL + 1))
+  else
+    check "${ARCHIVE} matches its published checksum" bash -c \
+      "echo '${WANT}  ${ARCHIVE}' | $SHA -c -"
+  fi
+done
+if [ "$SAW_ARCHIVE" = 0 ]; then
+  echo "SKIP  downloaded archive matches checksum (no pocket_*.tar.gz present here)"
+fi
+rm -f "$CHECKSUM_FILE"
 
 if [ "$HAVE_BINARY" = 1 ]; then
   check "service params reachable" bash -c \

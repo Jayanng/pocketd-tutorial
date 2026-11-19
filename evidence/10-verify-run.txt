@@ -1,9 +1,10 @@
+$ bash examples/verify.sh   (clean clone, after examples/bootstrap.sh)
 == pocketd tutorial verification ==
 node: https://sauron-rpc.infra.pocket.network | chain-id: pocket
 
 PASS  pocketd runs
 PASS  published checksum matches
-SKIP  downloaded archive matches checksum (pocket_linux_amd64.tar.gz not present here)
+PASS  pocket_linux_amd64.tar.gz matches its published checksum
 PASS  service params reachable
 PASS  add_service_fee is 1000000000 upokt
 PASS  REST cross-check agrees
@@ -16,4 +17,4 @@ PASS  node is not catching up
 PASS  generate-only works with an unreachable node
 PASS  sign --offline works with an unreachable node
 
-== summary: 13 passed, 0 failed ==
+== summary: 14 passed, 0 failed ==

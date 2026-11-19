@@ -201,8 +201,7 @@ node you are talking to is synced.
 ## Part 3: Create a key, safely
 
 `pocketd` supports several keyring backends. The official documentation
-draws the security line for you, and the CLI's own help text draws the
-same one:
+draws the security line for you. The CLI's own help text says the same:
 
 | Backend | Behavior | Recommended for |
 |---|---|---|
@@ -435,12 +434,13 @@ Security rules, in order of importance:
 this tutorial makes: checksum, version, live params, the service registry,
 a service card decode, card validation, node status, and the offline
 claims themselves (build and sign with an unreachable node). It creates
-only a throwaway key in a temporary directory, and it never sends
-anything to the network.
+one throwaway key in a temporary directory to run those tests, and it
+broadcasts nothing. Its queries are ordinary reads.
 
 If you have not installed `pocketd` yet, [`examples/bootstrap.sh`](examples/bootstrap.sh)
-does Part 1 for you: it downloads the release, checks the published
-checksum, and unpacks the binary into the repository root.
+does Part 1 for you: it picks the archive for your platform, verifies it
+against the published checksum, and unpacks the binary into the repository
+root.
 
 ```bash
 bash examples/bootstrap.sh   # downloads and verifies pocketd
@@ -451,9 +451,10 @@ Without the binary, `verify.sh` still runs the checks that need no local
 CLI and reports the rest as `SKIP`.
 
 Expected result: a line per check ending in `PASS`, and a summary with
-zero failures (13 checks after the bootstrap). The archive check reports
-`SKIP` when `pocket_linux_amd64.tar.gz` is not in the repository root,
-since it verifies bytes this repository does not ship.
+zero failures (14 checks after the bootstrap, 13 plus a `SKIP` when no
+release archive has been downloaded). The archive check verifies whatever
+`pocket_*.tar.gz` sits in the repository root against the published
+checksum file, since it verifies bytes this repository does not ship.
 
 ## Test evidence
 
